@@ -1,9 +1,10 @@
-const mapValidationIssuesToErrors = (issues) =>  issues.map((issue) => ({
+const mapValidationIssuesToErrors = (issues) =>
+  issues.map((issue) => ({
     name: issue.path.join('.'),
     message: issue.message,
   }))
 
-const handleValidation = async (request, response, functionValidation) => {
+export const handleValidation = async (request, response, functionValidation) => {
   try {
     const validatedData = await functionValidation(request.body)
     if (!validatedData.success) {
@@ -19,5 +20,3 @@ const handleValidation = async (request, response, functionValidation) => {
     return response.status(500).json({ message: error })
   }
 }
-
-export default handleValidation
