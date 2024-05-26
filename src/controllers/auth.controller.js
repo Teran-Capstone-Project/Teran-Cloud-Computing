@@ -4,9 +4,9 @@ import { handleValidation } from '../helpers/validation.helper.js'
 import { createUserValidation, userLoginValidation } from '../validations/auth.validation.js'
 import { checkPassword } from '../utils/hashing.js'
 
-export const Login = async (requset, response) => {
+export const Login = async (request, response) => {
   try {
-    const { email, password } = requset.body
+    const { email, password } = request.body
 
     const user = await findUserByEmail(email)
 
@@ -16,7 +16,7 @@ export const Login = async (requset, response) => {
 
     if (!isPasswordMatch) return response.json(401).json({ message: 'Invalid Password' })
 
-    const validatedUser = await handleValidation(requset, response, userLoginValidation)
+    const validatedUser = await handleValidation(request, response, userLoginValidation)
 
     if (!validatedUser.success) return
     const token = jwt.sign(
@@ -36,14 +36,14 @@ export const Login = async (requset, response) => {
   }
 }
 
-export const Register = async (requset, response) => {
-  const { email } = requset.body
+export const Register = async (request, response) => {
+  const { email } = request.body
   const user = await findUserByEmail(email)
 
   if (user) return response.json({ message: 'User already registered' })
 
   try {
-    const validatedUser = await handleValidation(requset, response, createUserValidation)
+    const validatedUser = await handleValidation(request, response, createUserValidation)
 
     if (!validatedUser.success) return
 
