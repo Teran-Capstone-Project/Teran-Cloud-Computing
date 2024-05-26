@@ -1,10 +1,8 @@
 import { hash, compare } from 'bcrypt'
 
 export const checkPassword = async (password, userPassword) => {
-  const comparedPassword = await compare(password, userPassword)
-  return comparedPassword
+  return compare(password, userPassword)
 }
 export const hashPassword = async (password) => {
-  const hashedPassword = await hash(password, 10)
-  return hashedPassword
+  return await hash(password, 10)
 }
