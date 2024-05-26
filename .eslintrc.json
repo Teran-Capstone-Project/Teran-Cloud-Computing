@@ -17,6 +17,7 @@
     "no-return-await": "off",
     "implicit-arrow-linebreak": "off",
     "import/prefer-default-export": "off",
-    "consistent-return": "off"
+    "consistent-return": "off",
+    "object-curly-newline": "off"
   }
 }
