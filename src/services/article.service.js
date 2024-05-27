@@ -13,7 +13,14 @@ export const findArticles = async () => {
     .populate({
       path: 'comments',
       model: commentModel,
+      select: '-article',
+      populate: {
+        path: 'user',
+        model: userModel,
+        select: '-password',
+      },
     })
+    .sort({ createdAt: -1 })
 }
 
 export const findArticleById = async (id) => {
@@ -27,6 +34,12 @@ export const findArticleById = async (id) => {
     .populate({
       path: 'comments',
       model: commentModel,
+      select: '-article',
+      populate: {
+        path: 'user',
+        model: userModel,
+        select: '-password',
+      },
     })
 }
 
@@ -39,19 +52,12 @@ export const createArticle = async (validatedArticle, request) => {
 }
 
 export const updateArticle = async (validatedArticle, id) => {
-  return await articleModel.updateOne(
-    {
-      _id: id,
-    },
-    {
-      title: validatedArticle.data.title,
-      description: validatedArticle.data.description,
-    },
-  )
+  return await articleModel.findByIdAndUpdate(id, {
+    title: validatedArticle.data.title,
+    description: validatedArticle.data.description,
+  })
 }
 
 export const removeArticle = async (id) => {
-  return await articleModel.deleteOne({
-    _id: id,
-  })
+  return await articleModel.findByIdAndDelete(id)
 }
