@@ -3,6 +3,8 @@ import express from 'express'
 import 'dotenv/config.js'
 import './utils/connection.js'
 import { AuthRouter } from './routes/auth.route.js'
+import { ArticleRouter } from './routes/article.route.js'
+import { CommentRouter } from './routes/comment.route.js'
 
 const port = process.env.PORT
 const app = express()
@@ -15,7 +17,10 @@ app.use(
 )
 
 app.get('/', (_, res) => res.json({ message: 'Hello world' }))
+
 app.use('/auth', AuthRouter)
+app.use('/articles', ArticleRouter)
+app.use('/comments', CommentRouter)
 
 app.listen(port, () => {
   console.log(`Server running on http://localhost:${port}`)
