@@ -1,14 +1,14 @@
-import { articleModel } from '../models/article.model.js'
+import { postModel } from '../models/post.model.js'
 import { commentModel } from '../models/comment.model.js'
 import { userModel } from '../models/user.model.js'
 
-export const createComment = async (validatedComment, userId, articleId) => {
+export const createComment = async (payload, userId, postId) => {
   const comment = await commentModel.create({
     user: userId,
-    article: articleId,
-    content: validatedComment.data.content,
+    post: postId,
+    content: payload.content,
   })
-  await articleModel.findByIdAndUpdate(articleId, {
+  await postModel.findByIdAndUpdate(postId, {
     $push: {
       comments: comment._id,
     },
@@ -24,11 +24,11 @@ export const findCommentById = async (id) => {
   })
 }
 
-export const updateComment = async (validatedComment, id) => {
+export const updateComment = async (payload, id) => {
   return await commentModel.findByIdAndUpdate(
     id,
     {
-      content: validatedComment.data.content,
+      content: payload.content,
     },
     {
       new: true,
@@ -39,7 +39,7 @@ export const updateComment = async (validatedComment, id) => {
 export const removeComment = async (id) => {
   const comment = await commentModel.findByIdAndDelete(id)
   if (comment) {
-    await articleModel.findByIdAndUpdate(comment.article, {
+    await postModel.findByIdAndUpdate(comment.post, {
       $pull: {
         comments: id,
       },
