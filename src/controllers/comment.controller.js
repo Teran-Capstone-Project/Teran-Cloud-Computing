@@ -8,7 +8,9 @@ export const postComment = async (request, response) => {
 
     if (!validatedComment.success) return
 
-    const { userId, postId } = request.body
+    const { id: userId } = request.user
+
+    const { postId } = request.body
 
     await createComment(validatedComment.data, userId, postId)
 

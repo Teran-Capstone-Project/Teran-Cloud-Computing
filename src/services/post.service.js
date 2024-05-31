@@ -19,6 +19,11 @@ export const findPosts = async () => {
         model: userModel,
         select: '-password',
       },
+      options: {
+        sort: {
+          createdAt: -1,
+        },
+      },
     })
     .sort({ createdAt: -1 })
 }
@@ -42,6 +47,11 @@ export const findPostsByUserId = async (id) => {
         model: userModel,
         select: '-password',
       },
+      options: {
+        sort: {
+          createdAt: -1,
+        },
+      },
     })
 }
 
@@ -61,6 +71,11 @@ export const findPostById = async (id) => {
         path: 'user',
         model: userModel,
         select: '-password',
+      },
+      options: {
+        sort: {
+          createdAt: -1,
+        },
       },
     })
 }
