@@ -2,7 +2,7 @@ import { handleValidation } from '../helpers/validation.helper.js'
 import {
   createJournal,
   findJournalById,
-  findJournal,
+  findJournalsByUserId,
   removeJournal,
   updateJournal,
 } from '../services/journal.service.js'
@@ -10,8 +10,8 @@ import { createJournalValidation } from '../validations/journal.validation.js'
 
 export const getJournals = async (request, response) => {
   try {
-    const { id } = request.body
-    const journals = await findJournal(id)
+    const { id } = request.user
+    const journals = await findJournalsByUserId(id)
 
     return response.status(200).json({ message: 'get journal succesfully', journals })
   } catch (error) {
@@ -37,11 +37,13 @@ export const getJournal = async (request, response) => {
 
 export const postJournal = async (request, response) => {
   try {
+    const { id } = request.user
+
     const validatedJournal = await handleValidation(request, response, createJournalValidation)
 
     if (!validatedJournal.success) return
 
-    await createJournal(validatedJournal, request)
+    await createJournal(validatedJournal.data, id)
 
     return response.status(200).json({ message: 'Journal succesfully created' })
   } catch (error) {
@@ -61,7 +63,7 @@ export const putJournal = async (request, response) => {
 
     if (!validatedJournal.success) return
 
-    await updateJournal(validatedJournal, id)
+    await updateJournal(validatedJournal.data, id)
 
     return response.status(200).json({ message: 'journal succesfully updated' })
   } catch (error) {

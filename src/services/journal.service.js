@@ -1,7 +1,7 @@
 import { journalModel } from '../models/journal.model.js'
 import { userModel } from '../models/user.model.js'
 
-export const findJournal = async (id) => {
+export const findJournalsByUserId = async (id) => {
   return await journalModel
     .find()
     .where({
@@ -22,18 +22,16 @@ export const findJournalById = async (id) => {
     select: '-password',
   })
 }
-export const createJournal = async (validatedJournal, request) => {
+export const createJournal = async (payload, id) => {
   return await journalModel.create({
-    title: validatedJournal.data.title,
-    description: validatedJournal.data.description,
-    user: request.body.id,
+    description: payload.description,
+    user: id,
   })
 }
 
-export const updateJournal = async (validatedJournal, id) => {
+export const updateJournal = async (payload, id) => {
   return await journalModel.findByIdAndUpdate(id, {
-    title: validatedJournal.data.title,
-    description: validatedJournal.data.description,
+    description: payload.description,
   })
 }
 
