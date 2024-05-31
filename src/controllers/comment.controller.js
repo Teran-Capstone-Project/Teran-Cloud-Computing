@@ -8,9 +8,11 @@ export const postComment = async (request, response) => {
 
     if (!validatedComment.success) return
 
-    const { userId, articleId } = request.body
+    const { id: userId } = request.user
 
-    await createComment(validatedComment, userId, articleId)
+    const { postId } = request.body
+
+    await createComment(validatedComment.data, userId, postId)
 
     return response.status(201).json({ message: 'comment successfully created' })
   } catch (error) {
@@ -29,7 +31,7 @@ export const putComment = async (request, response) => {
 
     if (!validatedComment.success) return
 
-    await updateComment(validatedComment, id)
+    await updateComment(validatedComment.data, id)
 
     return response.status(200).json({ message: 'Comment succesfully updated' })
   } catch (error) {

@@ -1,11 +1,7 @@
 import mongoose from 'mongoose'
 
-const articleSchema = new mongoose.Schema(
+const postSchema = new mongoose.Schema(
   {
-    title: {
-      type: String,
-      required: true,
-    },
     description: {
       type: String,
       required: true,
@@ -13,6 +9,10 @@ const articleSchema = new mongoose.Schema(
     user: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
+      required: true,
+    },
+    anonim: {
+      type: Boolean,
       required: true,
     },
     comments: [
@@ -25,4 +25,4 @@ const articleSchema = new mongoose.Schema(
   { timestamps: true },
 )
 
-export const articleModel = mongoose.model('Article', articleSchema)
+export const postModel = mongoose.model('Post', postSchema)

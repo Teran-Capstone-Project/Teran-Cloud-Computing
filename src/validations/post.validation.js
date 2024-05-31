@@ -1,10 +1,10 @@
 import { z } from 'zod'
 
-export const createArticleValidation = async (payload) => {
+export const createPostValidation = async (payload) => {
   return await z
     .object({
-      title: z.string(),
       description: z.string(),
+      anonim: z.boolean(),
     })
     .required()
     .safeParseAsync(payload)
