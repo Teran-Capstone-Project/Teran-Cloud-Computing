@@ -45,7 +45,7 @@ export const postJournal = async (request, response) => {
 
     await createJournal(validatedJournal.data, id)
 
-    return response.status(200).json({ message: 'Journal succesfully created' })
+    return response.status(201).json({ message: 'Journal succesfully created' })
   } catch (error) {
     console.error('Internal server error:', error.message)
     return response.status(500).json({ message: error })
