@@ -8,6 +8,7 @@ import { CommentRouter } from './routes/comment.route.js'
 import { JournalRouter } from './routes/journal.route.js'
 import { verifyToken } from './middleware/verifyToken.middleware.js'
 import { ReportRouter } from './routes/report.route.js'
+import { PredictRouter } from './routes/predict.route.js'
 
 const port = process.env.PORT
 const app = express()
@@ -26,6 +27,7 @@ app.use('/posts', verifyToken, PostRouter)
 app.use('/comments', verifyToken, CommentRouter)
 app.use('/journals', verifyToken, JournalRouter)
 app.use('/reports', verifyToken, ReportRouter)
+app.use('/predicts', verifyToken, PredictRouter)
 
 app.listen(port, () => {
   console.log(`Server running on http://localhost:${port}`)
