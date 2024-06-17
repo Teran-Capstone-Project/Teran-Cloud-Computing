@@ -21,7 +21,7 @@ app.use(
   }),
 )
 
-app.get('/', (_, res) => res.json({ message: 'Hello world' }))
+app.get('/', (_, res) => res.json({ message: 'Welcome to TERAN API' }))
 
 app.use('/auth', AuthRouter)
 app.use('/posts', verifyToken, PostRouter)

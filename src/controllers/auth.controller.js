@@ -29,7 +29,7 @@ export const Login = async (request, response) => {
       },
       `${process.env.SECRET_KEY}`,
     )
-    return response.status(200).json({ message: 'Login succesfully', token, user })
+    return response.status(200).json({ message: 'Login succesfully', token })
   } catch (error) {
     console.error('Internal server error:', error.message)
     return response.status(500).json({ message: error })
@@ -37,21 +37,18 @@ export const Login = async (request, response) => {
 }
 
 export const Register = async (request, response) => {
-  const { email } = request.body
-  const user = await findUserByEmail(email)
-
-  if (user) return response.json({ message: 'User already registered' })
-
   try {
+    const { email } = request.body
+    const user = await findUserByEmail(email)
+
+    if (user) return response.json({ message: 'User already registered' })
     const validatedUser = await handleValidation(request, response, createUserValidation)
 
     if (!validatedUser.success) return
 
     await createUser(validatedUser.data)
 
-    return response.status(201).json({
-      message: 'Registration succesfully',
-    })
+    return response.status(201).json({ message: 'Registration succesfully' })
   } catch (error) {
     console.error('Internal server error:', error.message)
     return response.status(500).json({ message: error })
