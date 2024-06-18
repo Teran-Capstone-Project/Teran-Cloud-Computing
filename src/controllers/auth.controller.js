@@ -19,17 +19,17 @@ export const Login = async (request, response) => {
     const validatedUser = await handleValidation(request, response, userLoginValidation)
 
     if (!validatedUser.success) return
-    const token = jwt.sign(
-      {
-        id: user.id,
-        name: user.name,
-        email: user.email,
-        profilePicture: user?.profilePicture,
-        role: user.role,
-      },
-      `${process.env.SECRET_KEY}`,
-    )
-    return response.status(200).json({ message: 'Login succesfully', token })
+
+    const authUser = {
+      id: user.id,
+      name: user.name,
+      email: user.email,
+      profilePicture: user?.profilePicture,
+      role: user.role,
+    }
+    const token = jwt.sign(authUser, `${process.env.SECRET_KEY}`)
+
+    return response.status(200).json({ message: 'Login succesfully', token, user: authUser })
   } catch (error) {
     console.error('Internal server error:', error.message)
     return response.status(500).json({ message: error })
