@@ -35,5 +35,7 @@ export const removeReportById = async (id) => {
 
   await postModel.findByIdAndDelete(report.post)
 
-  return await reportModel.findByIdAndDelete(id)
+  await reportModel.findByIdAndDelete(id)
+
+  return report
 }
